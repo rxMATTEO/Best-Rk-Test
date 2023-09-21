@@ -1,14 +1,15 @@
 <script setup>
 import {ref} from "vue";
 
-const bottom = ref(0);
+const bottom = ref('10%');
 const percents = ref(0);
 
 const breakpoints = {
-  80: '100%',
+  80: '90%',
   50: '50%',
-  20: '20%'
+  20: '10%'
 };
+const isMoving = ref(false);
 function dragStart(e){
   window.addEventListener('pointermove', move);
   window.addEventListener('pointerup', dragEnd)
@@ -20,14 +21,15 @@ function move(e){
 }
 
 function dragEnd(e){
+  isMoving.value = true;
   window.removeEventListener('pointermove', move);
-  console.log(Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1] )
   bottom.value = Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
+  setTimeout(() => isMoving.value = false, 200)
 }
 </script>
 
 <template>
-<div class="menu" @pointerdown="dragStart" :style="{ height: bottom }">
+<div class="menu" @pointerdown="dragStart" :style="{ height: bottom }" :class="{ moving: isMoving  }">
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" />
   </div>
@@ -45,6 +47,9 @@ function dragEnd(e){
   padding: 15px 5px;
   height: 10%;
   touch-action: none;
+  &.moving {
+    transition: height 0.2s ease-in-out;
+  }
 }
 
 .search {
@@ -53,8 +58,8 @@ function dragEnd(e){
 
 .search-bar {
   position: absolute;
-  left: 0px;
-  right: 0px;
+  left: 0;
+  right: 0;
   background-color: lightgray;
   border: none;
   padding: 7px;
