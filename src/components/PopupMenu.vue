@@ -2,22 +2,32 @@
 import {ref} from "vue";
 
 const bottom = ref(0);
+const percents = ref(0);
+
+const breakpoints = {
+  80: '100%',
+  50: '50%',
+  20: '20%'
+};
 function dragStart(e){
   window.addEventListener('pointermove', move);
   window.addEventListener('pointerup', dragEnd)
 }
 
 function move(e){
-  bottom.value = window.innerHeight - e.clientY - 40;
+  percents.value = (window.innerHeight - (e.clientY - 40)) / 10;
+  bottom.value = window.innerHeight - (e.clientY + 40) + 'px';
 }
 
 function dragEnd(e){
   window.removeEventListener('pointermove', move);
+  console.log(Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1] )
+  bottom.value = Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
 }
 </script>
 
 <template>
-<div class="menu" @pointerdown="dragStart" :style="{ height: bottom + 'px' }">
+<div class="menu" @pointerdown="dragStart" :style="{ height: bottom }">
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" />
   </div>
