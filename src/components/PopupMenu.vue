@@ -1,13 +1,13 @@
 <script setup>
 import {ref} from "vue";
 
-const bottom = ref('10%');
+const bottom = ref('3%');
 const percents = ref(0);
 
 const breakpoints = {
   80: '90%',
   50: '50%',
-  20: '10%'
+  20: '3%'
 };
 const isMoving = ref(false);
 function dragStart(e){
@@ -26,12 +26,24 @@ function dragEnd(e){
   bottom.value = Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
   setTimeout(() => isMoving.value = false, 200)
 }
+
+const tabs = ref([
+  {name: 'Все'},
+  {name: 'Места'},
+  {name: 'Скидки'},
+  {name: 'Карты'},
+]);
+
+const selectedTabIndex = ref(0);
 </script>
 
 <template>
 <div class="menu" @pointerdown="dragStart" :style="{ height: bottom }" :class="{ moving: isMoving  }">
   <div class="search">
-    <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" />
+    <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" @focus="bottom = breakpoints['80']" />
+  </div>
+  <div class="tabs">
+    <div v-for="(tab, index) in tabs" @click="selectedTabIndex = index" class="tab" :key="tab.name" :class="{ selected: index === selectedTabIndex }">{{ tab.name }}</div>
   </div>
 </div>
 </template>
@@ -54,6 +66,7 @@ function dragEnd(e){
 
 .search {
   position: relative;
+  height: 40px;
 }
 
 .search-bar {
@@ -68,4 +81,18 @@ function dragEnd(e){
   color: black;
 }
 
+.tabs {
+  color: black;
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  .tab {
+    width: 100%;
+    padding-bottom: 5px;
+    &.selected {
+      color: green;
+      border-bottom: green solid 1px;
+    }
+  }
+}
 </style>
