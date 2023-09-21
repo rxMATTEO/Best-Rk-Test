@@ -2,19 +2,22 @@
 import {ref} from "vue";
 
 const bottom = ref(0);
-const mouseMove = ref(null);
-
 function dragStart(e){
-  window.addEventListener('pointermove', move)
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', dragEnd)
 }
 
 function move(e){
-  console.log('move');
+  bottom.value = window.innerHeight - e.clientY - 40;
+}
+
+function dragEnd(e){
+  window.removeEventListener('pointermove', move);
 }
 </script>
 
 <template>
-<div class="menu" @pointerdown="dragStart" :style="{ bottom: bottom }">
+<div class="menu" @pointerdown="dragStart" :style="{ bottom: bottom + 'px' }">
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" />
   </div>
