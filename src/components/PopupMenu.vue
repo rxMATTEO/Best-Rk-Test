@@ -17,7 +17,7 @@ function dragEnd(e){
 </script>
 
 <template>
-<div class="menu" @pointerdown="dragStart" :style="{ bottom: bottom + 'px' }">
+<div class="menu" @pointerdown="dragStart" :style="{ height: bottom + 'px' }">
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" />
   </div>
@@ -33,7 +33,7 @@ function dragEnd(e){
   right: 0;
   background: white;
   padding: 15px 5px;
-  height: 5%;
+  height: 10%;
   touch-action: none;
 }
 
