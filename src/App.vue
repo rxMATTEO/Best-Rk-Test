@@ -1,17 +1,11 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+  const map = new Microsoft.Maps.Map('#myMap');
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <div id="myMap" style="position:relative;width:600px;height:400px;" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
