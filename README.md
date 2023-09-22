@@ -1,7 +1,16 @@
-# Vue 3 + Vite
+# Test description 
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Задание: По ссылке найдете видео функциональности, которую нужно в общих чертах повторить на Vue для мобильного представления сайта, а именно: ⁃ Подложка в виде карты с маркерами (можете выбрать любую sdk карт); ⁃ От нижнего края пальцем выдвигается шторка с полем ввода, которая после отпускания фиксируется в ближайшем из трех положений: нижнее, среднее и верхнее; ⁃ В шторке также присутствуют несколько вкладок; ⁃ В каждой вкладке вертикально прокручиваемый список (при прокрутке списка до верхнего края шторка тянется вниз, при прокрутке списка вниз шторка разворачивается в верхнее положение); ⁃ При нажатии на поле ввода шторка разворачивается в верхнее положение.
+________________________________________
+https://cloud.mail.ru/public/43Yy/gsq5bBzH1 (https://cloud.mail.ru/public/43Yy/gsq5bBzH1)
 
-## Recommended IDE Setup
+# Start
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Dev
+`npm run dev`
+
+## Build
+`npm run build`
+
+## Preview build
+`npm run preview`
