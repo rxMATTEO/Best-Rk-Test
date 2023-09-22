@@ -1,14 +1,14 @@
 <script setup>
 import {ref} from "vue";
 
-const bottom = ref('3%');
 const percents = ref(0);
 
 const breakpoints = {
   80: '90%',
   50: '50%',
-  20: '3%'
+  20: '7%'
 };
+const bottom = ref(breakpoints["20"]);
 const isMoving = ref(false);
 function dragStart(e){
   window.addEventListener('pointermove', move);
@@ -33,12 +33,14 @@ const tabs = ref([
   {name: 'Скидки'},
   {name: 'Карты'},
 ]);
-
 const selectedTabIndex = ref(0);
 </script>
 
 <template>
-<div class="menu" @pointerdown="dragStart" :style="{ height: bottom }" :class="{ moving: isMoving  }">
+<div class="menu" :style="{ height: bottom }" :class="{ moving: isMoving  }">
+  <div class="grabber" @pointerdown="dragStart">
+    <div class="grabber-icon" />
+  </div>
   <div class="search">
     <input type="text" class="search-bar" placeholder="Поиск мест, скидок, карт поблизости" @focus="bottom = breakpoints['80']" />
   </div>
@@ -49,6 +51,8 @@ const selectedTabIndex = ref(0);
 </template>
 
 <style scoped lang="scss">
+$primary: #4BC6A6;
+
 .menu {
   position: absolute;
   z-index: 1000;
@@ -56,11 +60,24 @@ const selectedTabIndex = ref(0);
   left: 0;
   right: 0;
   background: white;
-  padding: 15px 5px;
+  padding: 5px 5px;
   height: 10%;
   touch-action: none;
   &.moving {
     transition: height 0.2s ease-in-out;
+  }
+  .grabber {
+    padding: 2px 0;
+    .grabber-icon {
+      background: gray;
+      height: 5px;
+      margin-bottom: 5px;
+      width: 50px;
+      display: inline-block;
+      text-align: center;
+      border-radius: 5px;
+      background: $primary;
+    }
   }
 }
 
@@ -86,12 +103,16 @@ const selectedTabIndex = ref(0);
   display: flex;
   justify-content: space-around;
   gap: 5px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   .tab {
     width: 100%;
     padding-bottom: 5px;
     &.selected {
-      color: green;
-      border-bottom: green solid 1px;
+      color: $primary;
+      border-bottom: $primary solid 1px;
     }
   }
 }
