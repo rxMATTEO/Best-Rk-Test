@@ -16,7 +16,7 @@ const bottom = ref(breakpoints["20"]);
 const isMoving = ref(false);
 function dragStart(e){
   window.addEventListener('pointermove', move);
-  window.addEventListener('pointerup', dragEnd)
+  window.addEventListener('pointerup', () => dragEnd())
 }
 
 function move(e){
@@ -26,7 +26,7 @@ function move(e){
 
 function dragEnd(bottomValue){
   isMoving.value = true;
-  console.log(bottom)
+  console.log(bottomValue)
   window.removeEventListener('pointermove', move);
   bottom.value = bottomValue || Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
   setTimeout(() => isMoving.value = false, 200)

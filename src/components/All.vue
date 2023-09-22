@@ -38,7 +38,7 @@ const items = [
   <div>
     <div v-for="item in items" :key="item.header" class="company-item">
       <div>
-        <img alt="Company logo" src="" />
+        <img alt="Company logo" src="src/assets/vue.svg" />
       </div>
       <div>
         <p class="tab-header">{{ item.header }}</p>
