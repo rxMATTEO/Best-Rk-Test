@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {ref, shallowReactive, shallowRef} from "vue";
 import All from "./All.vue";
 import Places from "./Places.vue";
 import Sales from "./Sales.vue";
@@ -10,7 +10,7 @@ const percents = ref(0);
 const breakpoints = {
   80: '90%',
   50: '50%',
-  20: '7%'
+  20: '8%'
 };
 const bottom = ref(breakpoints["20"]);
 const isMoving = ref(false);
@@ -24,14 +24,15 @@ function move(e){
   bottom.value = window.innerHeight - (e.clientY + 40) + 'px';
 }
 
-function dragEnd(e){
+function dragEnd(bottomValue){
   isMoving.value = true;
+  console.log(bottom)
   window.removeEventListener('pointermove', move);
-  bottom.value = Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
+  bottom.value = bottomValue || Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
   setTimeout(() => isMoving.value = false, 200)
 }
 
-const tabs = ref([
+const tabs = shallowRef([
   {
     name: 'Все',
     component: All,
@@ -49,6 +50,16 @@ const tabs = ref([
     component: Maps
   },
 ]);
+
+function stickTab(e){
+  const element = e.target;
+  if(element.scrollTop + element.offsetHeight>= element.scrollHeight) {
+    dragEnd(breakpoints['80'])
+  }
+  else if(element.scrollTop === 0){
+    dragEnd(breakpoints['50'])
+  }
+}
 const selectedTabIndex = ref(0);
 </script>
 
@@ -63,7 +74,7 @@ const selectedTabIndex = ref(0);
   <div class="tabs">
     <div v-for="(tab, index) in tabs" @click="selectedTabIndex = index" class="tab" :key="tab.name" :class="{ selected: index === selectedTabIndex }">{{ tab.name }}</div>
   </div>
-  <div class="dynamic-tab-content">
+  <div class="dynamic-tab-content" @scroll="stickTab">
     <component :is="tabs[selectedTabIndex].component" />
   </div>
 </div>
@@ -82,6 +93,7 @@ $primary: #4BC6A6;
   padding: 5px 5px;
   height: 10%;
   touch-action: none;
+  overflow: hidden;
   &.moving {
     transition: height 0.2s ease-in-out;
   }
@@ -139,5 +151,7 @@ $primary: #4BC6A6;
 .dynamic-tab-content {
   margin-top: 35px;
   color: black;
+  max-height: 75%;
+  overflow-y: scroll;
 }
 </style>

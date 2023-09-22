@@ -19,4 +19,13 @@ input[type=text] {
   -moz-appearance: none;
   appearance: none;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>
