@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+Скидки
 
 </template>
 

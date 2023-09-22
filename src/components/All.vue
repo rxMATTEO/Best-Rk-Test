@@ -3,8 +3,7 @@
 </script>
 
 <template>
-
-
+  Все
 </template>
 
 <style scoped lang="scss">

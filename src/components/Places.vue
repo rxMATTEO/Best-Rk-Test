@@ -4,7 +4,7 @@
 
 <template>
 
-
+Места
 </template>
 
 <style scoped lang="scss">

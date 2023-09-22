@@ -1,5 +1,9 @@
 <script setup>
 import {ref} from "vue";
+import All from "./All.vue";
+import Places from "./Places.vue";
+import Sales from "./Sales.vue";
+import Maps from "./Maps.vue";
 
 const percents = ref(0);
 
@@ -28,10 +32,22 @@ function dragEnd(e){
 }
 
 const tabs = ref([
-  {name: 'Все'},
-  {name: 'Места'},
-  {name: 'Скидки'},
-  {name: 'Карты'},
+  {
+    name: 'Все',
+    component: All,
+  },
+  {
+    name: 'Места',
+    component: Places,
+  },
+  {
+    name: 'Скидки',
+    component: Sales,
+  },
+  {
+    name: 'Карты',
+    component: Maps
+  },
 ]);
 const selectedTabIndex = ref(0);
 </script>
@@ -46,6 +62,9 @@ const selectedTabIndex = ref(0);
   </div>
   <div class="tabs">
     <div v-for="(tab, index) in tabs" @click="selectedTabIndex = index" class="tab" :key="tab.name" :class="{ selected: index === selectedTabIndex }">{{ tab.name }}</div>
+  </div>
+  <div class="dynamic-tab-content">
+    <component :is="tabs[selectedTabIndex].component" />
   </div>
 </div>
 </template>
@@ -115,5 +134,10 @@ $primary: #4BC6A6;
       border-bottom: $primary solid 1px;
     }
   }
+}
+
+.dynamic-tab-content {
+  margin-top: 35px;
+  color: black;
 }
 </style>
