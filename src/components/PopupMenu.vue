@@ -5,30 +5,29 @@ import Places from "./Places.vue";
 import Sales from "./Sales.vue";
 import Maps from "./Maps.vue";
 
-const percents = ref(0);
-
 const breakpoints = {
   80: '90%',
   50: '50%',
   20: '8%'
 };
 const bottom = ref(breakpoints["20"]);
-const isMoving = ref(false);
+const isMenuExpanding = ref(false);
+const percentsOfScreenHeight = ref(0);
 function dragStart(e){
   window.addEventListener('pointermove', move);
   window.addEventListener('pointerup', () => dragEnd())
 }
 
 function move(e){
-  percents.value = (window.innerHeight - (e.clientY - 40)) / 10;
+  percentsOfScreenHeight.value = (window.innerHeight - (e.clientY - 40)) / 10;
   bottom.value = window.innerHeight - (e.clientY + 40) + 'px';
 }
 
 function dragEnd(bottomValue){
-  isMoving.value = true;
+  isMenuExpanding.value = true;
   window.removeEventListener('pointermove', move);
-  bottom.value = bottomValue || Object.entries( breakpoints ).find(([key, value]) => percents.value < key )[1];
-  setTimeout(() => isMoving.value = false, 200)
+  bottom.value = bottomValue || Object.entries( breakpoints ).find(([key]) => percentsOfScreenHeight.value < key )[1];
+  setTimeout(() => isMenuExpanding.value = false, 200)
 }
 
 const tabs = shallowRef([
@@ -63,7 +62,7 @@ const selectedTabIndex = ref(0);
 </script>
 
 <template>
-<div class="menu" :style="{ height: bottom }" :class="{ moving: isMoving  }">
+<div class="menu" :style="{ height: bottom }" :class="{ moving: isMenuExpanding  }">
   <div class="grabber" @pointerdown="dragStart">
     <div class="grabber-icon" />
   </div>
